@@ -23,8 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() {
     if (!_formKey.currentState!.validate()) return;
-    if (_emailCtrl.text.trim() == 'admin@gmail.com' &&
-        _passCtrl.text == 'admin') {
+    if (_emailCtrl.text.trim() == 'admin@gmail.com' && _passCtrl.text == 'admin') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const HomeScreen()),
@@ -37,129 +36,137 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Fundo com o mesmo gradiente do splash
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF1A2980), Color(0xFF26D0CE)],
+            colors: [Color(0xFF005AA7), Color(0xFF00CDAC)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+            padding: const EdgeInsets.all(24),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Ícone central parecido com splash
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 12,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.calculate,
-                      color: Colors.white,
-                      size: 80,
+                  Hero(
+                    tag: 'salary-logo',
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.attach_money,
+                        color: Colors.white,
+                        size: 70,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 36),
-                  // Título
+                  const SizedBox(height: 24),
                   const Text(
-                    'Simulador de Encargos',
+                    "Bem-vindo de volta!",
                     style: TextStyle(
-                      color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
+                      color: Colors.white,
+                      letterSpacing: 1.1,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  // Subtítulo
                   const Text(
-                    'Faça login para continuar',
+                    "Acesse a plataforma de cálculo de encargos para empregadas domésticas de forma simples, rápida e confiável.",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
+                      fontSize: 15,
                       color: Colors.white70,
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
+                      height: 1.4,
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  // Email
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailCtrl,
-                    keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      labelStyle: const TextStyle(color: Colors.white70),
-                      prefixIcon: const Icon(Icons.email_outlined, color: Colors.white70),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      prefixIcon: const Icon(Icons.email_outlined, color: Colors.white),
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.15),
+                      fillColor: Colors.white.withOpacity(0.1),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
                     ),
-                    validator: (v) =>
-                        (v == null || !v.contains('@')) ? 'Digite um email válido' : null,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (v) => (v == null || !v.contains('@')) ? 'Digite um email válido' : null,
                   ),
                   const SizedBox(height: 20),
-                  // Senha
                   TextFormField(
                     controller: _passCtrl,
-                    obscureText: true,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Senha',
-                      labelStyle: const TextStyle(color: Colors.white70),
-                      prefixIcon: const Icon(Icons.lock_outline, color: Colors.white70),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      prefixIcon: const Icon(Icons.lock_outline, color: Colors.white),
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.15),
+                      fillColor: Colors.white.withOpacity(0.1),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
                     ),
+                    obscureText: true,
                     validator: (v) => (v == null || v.isEmpty) ? 'Digite uma senha' : null,
                   ),
-                  const SizedBox(height: 16),
-                  // Mensagem de erro
+                  const SizedBox(height: 20),
                   if (_error != null)
                     Text(
                       _error!,
-                      style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
+                      style: const TextStyle(color: Colors.redAccent),
                     ),
-                  if (_error != null) const SizedBox(height: 16),
-                  // Botão
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: _login,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF1A2980),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                  const SizedBox(height: 25),
+                  GestureDetector(
+                    onTap: _login,
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF005AA7), Color(0xFF00CDAC)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 6,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Entrar',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      child: const Text('Entrar'),
                     ),
                   ),
                 ],

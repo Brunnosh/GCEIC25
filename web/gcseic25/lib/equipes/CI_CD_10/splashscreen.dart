@@ -15,9 +15,6 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
 
-  final List<double> _barHeights = [30, 50, 40, 60, 45];
-  bool _animateBars = false;
-
   @override
   void initState() {
     super.initState();
@@ -33,14 +30,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // Inicia a animação das barras
-    Future.delayed(const Duration(milliseconds: 600), () {
-      setState(() {
-        _animateBars = true;
-      });
-    });
-
-    // Navegação após tempo
     Timer(const Duration(seconds: 4), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
@@ -62,26 +51,13 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  Widget _buildAnimatedBar(double height, int index) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 600 + (index * 100)),
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      width: 10,
-      height: _animateBars ? height : 10,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(4),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF1A2980), Color(0xFF26D0CE)],
+            colors: [Color(0xFF005AA7), Color(0xFF00CDAC)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -92,35 +68,48 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.calculate, size: 80, color: Colors.white),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _barHeights
-                      .asMap()
-                      .entries
-                      .map((e) => _buildAnimatedBar(e.value, e.key))
-                      .toList(),
-                ),
-                const SizedBox(height: 32),
-                const Text(
-                  "Simulador de Encargos",
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  "Calculando seus direitos com precisão...",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
+                Hero(
+                  tag: 'salary-logo',
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.attach_money,
+                      color: Colors.white,
+                      size: 80,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 36),
+                const Text(
+                  "Cálculo de Salário",
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                const Text(
+                  "Calculando seu sucesso financeiro...",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: 40),
                 const CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
